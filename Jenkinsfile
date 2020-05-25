@@ -25,7 +25,7 @@
 //}
   pipeline {
 	environment {
-    registry = "bukkanikhilsai/tomex"
+    registry = "srikaradapa/online-notes-sharing"
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
