@@ -1,5 +1,6 @@
 FROM php:7.3-apache
 RUN apt-get update 
+RUN apt-get install docker-ce docker-ce-cli containerd.io
 RUN apt-get install -y git
 RUN docker-php-ext-install pdo 
 RUN docker-php-ext-install pdo_mysql 
