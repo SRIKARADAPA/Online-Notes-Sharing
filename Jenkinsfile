@@ -43,8 +43,8 @@
 				script {
 					docker.withRegistry( '', registryCredential ) {
 						dockerImage.push()
-						pushLatestBuild = "docker push "+registry
-						sh pushLatestBuild
+						//pushLatestBuild = "docker push "+registry
+						//sh pushLatestBuild
 					}
 				}
 			}
