@@ -25,7 +25,7 @@
 //}
   pipeline {
 	environment {
-    registry = "srikaradapa/online-notes-sharing"
+    registry = "srikaradapa/php_img"
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
