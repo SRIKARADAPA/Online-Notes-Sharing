@@ -26,10 +26,9 @@
    pipeline {
      agent { dockerfile true }
     stages {
-        stage('Test') {
+        stage('Docker') {
             steps {
-                //sh  'docker-compose build'
-                sh '/usr/bin/docker-compose up'
+                sh "docker-compose up"
             }
         }
     }
