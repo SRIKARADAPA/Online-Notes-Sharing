@@ -29,29 +29,25 @@
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
-  agent any
-  stages {
-   stage('DockerHub') {
-
-      stages{
-        stage('Build Image') {
-          steps{
-            script {
-              dockerImage = docker.build registry + ":$BUILD_NUMBER"
-          }
-          }
-        }
-        stage('Push Image') {
-          steps{
-            script {
-              docker.withRegistry( '', registryCredential ) {
-                dockerImage.push()
-              }
-            }
-         }
-        }
-			}
-		}
+ agent any
+    stages {
+     stage('Build') {
+      steps {
+       sh 'docker-compose build'
+       }
+     }
+     stage('Up') {
+      steps {
+        sh 'docker-compose up -d'
+      }
+     }
+     stage('Docker Hub'){
+       steps{
+     	  withDockerRegistry([ credentialsId: "dockerhub", url: "" ]){
+     	   sh 'docker push srikaradapa/online-notes-sharing'
+ 	     }
+     }
+   }
 
 /*
 		Job Id to update both the Web App and Database container : 382dd188-788c-4dd3-913b-d68437498c69
