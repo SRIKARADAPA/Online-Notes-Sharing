@@ -28,9 +28,7 @@
     stages {
         stage('Docker') {
             steps {
-              sh  'docker run -v /var/run/docker.sock:/var/run/docker.sock \
-           -ti docker'
-                sh 'docker-compose up'
+                sh 'docker compose up'
             }
         }
     }
