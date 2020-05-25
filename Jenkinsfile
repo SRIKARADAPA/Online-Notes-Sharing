@@ -28,7 +28,7 @@
     stages {
         stage('Docker') {
             steps {
-                sh 'docker-compose --verbose up -d'
+                sh 'docker-compose up'
             }
         }
     }
