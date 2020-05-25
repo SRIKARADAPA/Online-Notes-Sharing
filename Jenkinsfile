@@ -28,7 +28,8 @@
     stages {
         stage('Docker') {
             steps {
-                sh "docker-compose up"
+                sh "docker-composer build"
+                sh "docker-compose up -d"
             }
         }
     }
