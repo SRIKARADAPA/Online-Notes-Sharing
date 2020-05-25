@@ -23,13 +23,51 @@
     //}
   //}
 //}
-   pipeline {
-     agent { dockerfile true }
-    stages {
-        stage('Docker') {
-            steps {
-                sh 'docker-compose up'
-            }
-        }
-    }
-   }
+  pipeline {
+	environment {
+    registry = "bukkanikhilsai/tomex"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
+  agent any
+  stages {
+    stage('Deliver - build docker image') {
+			steps{
+				script {
+					dockerImage = docker.build registry + ":$BUILD_NUMBER"
+				}
+			}
+		}
+		stage('Deliver - push docker image') {
+			steps{
+				script {
+					docker.withRegistry( '', registryCredential ) {
+						dockerImage.push()
+						pushLatestBuild = "docker push "+registry
+						sh pushLatestBuild
+					}
+				}
+			}
+		}
+
+/*
+		Job Id to update both the Web App and Database container : 382dd188-788c-4dd3-913b-d68437498c69
+		Job Id only to update the Web App container only: 7e706023-c5ba-44e5-b3a0-1b26087507ac
+		Job Id to update on the Database Container only: 08157783-2818-42ee-b118-b21670fdf037
+*/
+
+		//stage('Deploy- Rundeck') {
+      //agent any
+      //steps {
+        //script {
+          //step([$class: "RundeckNotifier",
+          //rundeckInstance: "Rundeck",
+          //options: """
+            //BUILD_VERSION=$BUILD_NUMBER
+          //""",
+          //jobId: "382dd188-788c-4dd3-913b-d68437498c69"])
+        //}
+      //}
+    //}
+  }
+}
