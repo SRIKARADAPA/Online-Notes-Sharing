@@ -24,11 +24,6 @@
   //}
 //}
   pipeline {
-	environment {
-    registry = "srikaradapa/php_img"
-    registryCredential = 'dockerhub'
-    dockerImage = ''
-  }
  agent any
     stages {
      stage('Build') {
@@ -46,6 +41,7 @@
      	  withDockerRegistry([ credentialsId: "dockerhub", url: "" ]){
          //sh 'docker login -u srikaradapa -p Srikar@1829'
      	   sh 'docker push srikaradapa/php_img'
+         sh 'docker push srikaradapa/mysql-server-800'
  	     }
      }
    }
