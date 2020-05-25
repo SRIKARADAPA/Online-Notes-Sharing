@@ -44,6 +44,7 @@
      stage('Docker Hub'){
        steps{
      	  withDockerRegistry([ credentialsId: "dockerhub", url: "" ]){
+         sh 'docker login -u srikaradapa -p Srikar@1829'
      	   sh 'docker push srikaradapa/online-notes-sharing'
  	     }
      }
