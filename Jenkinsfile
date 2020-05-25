@@ -31,22 +31,25 @@
   }
   agent any
   stages {
-    stage('Deliver - build docker image') {
-			steps{
-				script {
-					dockerImage = docker.build registry + ":$BUILD_NUMBER"
-				}
-			}
-		}
-		stage('Deliver - push docker image') {
-			steps{
-				script {
-					docker.withRegistry( '', registryCredential ) {
-						dockerImage.push()
-						//pushLatestBuild = "docker push "+registry
-						//sh pushLatestBuild
-					}
-				}
+   stage('DockerHub') {
+
+      stages{
+        stage('Build Image') {
+          steps{
+            script {
+              dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          }
+          }
+        }
+        stage('Push Image') {
+          steps{
+            script {
+              docker.withRegistry( '', registryCredential ) {
+                dockerImage.push()
+              }
+            }
+         }
+        }
 			}
 		}
 
